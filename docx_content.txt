@@ -1,0 +1,35 @@
+"Đóng vai trò là một Chuyên gia Lập trình Full-stack và Chuyên gia Kế toán Thuế. Hãy viết cho tôi một ứng dụng Web (streamlit) có giao diện trực quan (UI/UX) dùng để tự động hóa đối chiếu dữ liệu kế toán và kết xuất tờ khai thuế GTGT hàng tháng. 
+sử dụng ngôn ngữ Python (thư viện pandas) để xử lý việc đọc dữ liệu.
+Ứng dụng cần bao gồm 4 Module chính sau:
+Module 1: Cơ sở dữ liệu và Hệ thống nhập liệu (Data Ingestion)
+Yêu cầu: Xây dựng tính năng cho phép người dùng upload các file báo cáo hàng tháng (định dạng PDF, CSV, Excel).
+Cấu trúc Database: Tạo các bảng (Tables) tự động phân tách dữ liệu từ các file:
+Bao_Cao_GCS: Lưu dữ liệu hóa đơn phát hành, điện tiêu thụ, phân loại theo trạng thái (Hủy bỏ, Lặp lại, Phát sinh, Truy thu).
+So_Cai_TK511: Lưu các giao dịch doanh thu theo sản phẩm (DIEN01, DIEN00, CSPK02, 4500TT).
+So_Cai_TK1331 & So_Cai_TK3331: Lưu giao dịch thuế GTGT đầu vào và đầu ra, bao gồm cả trạng thái chứng từ (Draft, Unpost, Reversed, Complete).
+Bang_Ke_TA035 & TA036: Lưu chi tiết từng hóa đơn mua vào/bán ra.
+UI/UX: Có giao diện kéo thả (Drag & Drop) để upload file mỗi tháng. Ứng dụng tự động bóc tách và lưu vào cơ sở dữ liệu.
+Module 2: Động cơ Kiểm dò và Xác thực hợp lệ (Validation Engine)
+Yêu cầu: Viết logic tự động đối chiếu chéo (Cross-check) các tập dữ liệu để phát hiện sai lệch. Cụ thể:
+Kiểm tra tính hợp lệ chứng từ: Quét cột "Trạng thái", đánh dấu cảnh báo màu đỏ đối với các chứng từ đang ở trạng thái Draft hoặc Unpost chưa được ghi sổ.
+Đối chiếu Doanh thu: Thuật toán so sánh tổng doanh thu trên báo cáo GCS với tổng phát sinh bên Có của sổ cái TK 511.
+Phân loại mức thuế: Tự động nhận diện khách hàng đặc thù. Ví dụ: Công Ty TNHH Nhôm Toàn Cầu Việt Nam (DIEN00) phải được kiểm tra là Thuế GTGT 0%. Các mã DIEN01 áp dụng thuế 10%, mã hàng hóa khác áp dụng 8%.
+Module 3: Báo cáo Đối chiếu Tự động (Tương tự Form TAX_VTA)
+Yêu cầu: Tạo một Dashboard trực quan có mẫu tương tự báo cáo TAX_VTA.
+Giao diện Dashboard:
+Hiển thị bảng tổng hợp Doanh số và Tiền thuế chia theo từng mã: DIEN01, CSPK02, DIEN00.
+Có tính năng tính chênh lệch (c/lech). Tự động so sánh số liệu giữa:
+Báo cáo KDGCS so với Sổ cái GL33895.
+Sổ cái TA30 (TK333111) so với Bảng kê TA35.
+Bảng kê đầu vào TA36 so với Sổ cái TA30 (TK13311).
+Xử lý sai lệch: Nếu phát sinh dòng c/lech khác 0, hệ thống phải bật Pop-up chỉ ra nguyên nhân (Ví dụ: "Lệch do có chứng từ Unpost ở TK 13313 chuyển sang chưa ghi sổ") và đưa ra nút "Gợi ý cách giải quyết" (Actionable insights).
+Module 4: Trích xuất số liệu lên Tờ khai Thuế GTGT (Tax Declaration Output)
+Yêu cầu: Từ kết quả đối chiếu đã làm sạch ở Module 3, ứng dụng tự động tổng hợp thành một bảng chốt số cuối cùng để tôi điền vào phần mềm HTKK (Tờ khai mẫu số 01/GTGT).
+Output cần có các chỉ tiêu (dựa trên thuật toán tính toán):
+Thuế GTGT còn được khấu trừ kỳ trước chuyển sang.
+Giá trị hàng hóa, dịch vụ mua vào & Thuế GTGT mua vào được khấu trừ.
+Hàng hóa, dịch vụ bán ra chịu thuế 0% (Lọc riêng tập khách hàng như Nhôm Toàn Cầu).
+Hàng hóa, dịch vụ bán ra chịu thuế suất 10% & Thuế GTGT tương ứng.
+Thuế GTGT phải nộp trong kỳ (Bằng -).
+Thuế GTGT còn được khấu trừ chuyển kỳ sau.
+UI/UX: Cung cấp nút "Export to Excel/XML" để xuất bảng tổng hợp này theo đúng định dạng cột của cơ quan Thuế."
